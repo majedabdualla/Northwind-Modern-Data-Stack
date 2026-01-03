@@ -1,0 +1,19 @@
+version: 2
+
+sources:
+  - name: bronze
+    schema: bronze
+    tables:
+      - name: customers
+      - name: employees
+      - name: orders
+      - name: orderdetails
+      - name: products
+      - name: categories
+      - name: suppliers
+      - name: shippers
+      - name: region
+      - name: territories
+      - name: employeeterritories
+      - name: customerdemographics
+      - name: customercustomerdemo

@@ -1,0 +1,83 @@
+version: 2
+
+models:
+
+  
+  # DIM EMPLOYEE
+  
+  - name: dim_employees
+    description: "Employee dimension (SCD Type 2)"
+
+    columns:
+      - name: employee_sk
+        tests:
+          - not_null
+          - unique
+
+      - name: employee_id
+        tests:
+          - not_null
+
+      - name: is_current_record
+        tests:
+          - accepted_values:
+              values: [true, false]
+
+  # DIM PRODUCT
+  - name: dim_products
+    description: "Product dimension"
+
+    columns:
+      - name: product_sk
+        tests:
+          - not_null
+          - unique
+
+      - name: product_id
+        tests:
+          - not_null
+
+  # DIM CUSTOMER
+  - name: dim_customers
+    description: "Customer dimension"
+
+    columns:
+      - name: customer_sk
+        tests:
+          - not_null
+          - unique
+
+  
+  # FACT ORDERS
+  - name: fact_orders
+    description: "Order fact table"
+
+    columns:
+      - name: order_sk
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_sk
+        tests:
+          - relationships:
+              to: ref('dim_customers')
+              field: customer_sk
+
+      - name: product_sk
+        tests:
+          - relationships:
+              to: ref('dim_products')
+              field: product_sk
+
+      - name: employee_sk
+        tests:
+          - relationships:
+              to: ref('dim_employees')
+              field: employee_sk
+
+      - name: order_date_key
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
